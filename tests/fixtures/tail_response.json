@@ -1,0 +1,35 @@
+{
+  "streams": [
+    {
+      "stream": {
+        "app": "nginx",
+        "job": "varlogs",
+        "pod": "nginx-7d4f8b9c-abcde"
+      },
+      "values": [
+        ["1698386400000000000", "192.168.1.1 - GET /api/health 200"],
+        ["1698386401000000000", "ERROR: connection refused to backend server"],
+        ["1698386402000000000", "192.168.1.2 - POST /api/users 201"],
+        ["1698386403000000000", "INFO: health check passed"],
+        ["1698386404000000000", "WARN: disk usage at 85%"]
+      ]
+    },
+    {
+      "stream": {
+        "app": "api",
+        "namespace": "production"
+      },
+      "values": [
+        ["1698386405000000000", "DEBUG: request processing started"],
+        ["1698386406000000000", "FATAL: database connection pool exhausted"]
+      ]
+    },
+    {
+      "stream": {
+        "app": "worker",
+        "namespace": "production"
+      },
+      "values": []
+    }
+  ]
+}

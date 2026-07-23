@@ -1,0 +1,19 @@
+{
+  "status": "success",
+  "data": {
+    "resultType": "streams",
+    "result": [
+      {
+        "stream": {
+          "app": "nginx",
+          "job": "varlogs"
+        },
+        "values": [
+          ["1698386300000000000", "INFO: server started"],
+          ["1698386350000000000", "192.168.1.10 - GET / 200"],
+          ["1698386400000000000", "ERROR: upstream timeout"]
+        ]
+      }
+    ]
+  }
+}

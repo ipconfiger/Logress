@@ -1,0 +1,50 @@
+[package]
+name = "graftail"
+version = "0.1.0"
+edition = "2021"
+description = "Real-time Loki log tailing via Grafana Data Source Proxy"
+license = "MIT"
+
+[[bin]]
+name = "graftail"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+clap = { version = "4", features = ["derive", "env"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+tokio-tungstenite = { version = "0.24", features = ["__rustls-tls"] }
+tungstenite = "0.24"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+crossterm = "0.28"
+owo-colors = { version = "4", features = ["supports-colors"] }
+config = "0.14"
+toml = "0.8"
+chrono = { version = "0.4", features = ["serde"] }
+anyhow = "1"
+thiserror = "2"
+rpassword = "7"
+base64 = "0.22"
+url = "2"
+http = "1"
+tokio-util = { version = "0.7", features = ["rt"] }
+humantime = "2"
+zeroize = { version = "1", features = ["derive"] }
+futures-util = "0.3"
+rand = "0.8"
+directories = "6"
+rustls = "0.23"
+dotenvy = "0.15"
+
+[dev-dependencies]
+tokio-test = "0.4"
+wiremock = "0.6"
+pretty_assertions = "1"
+
+[profile.release]
+lto = true
+codegen-units = 1
+strip = true
+opt-level = 3
+panic = "abort"
