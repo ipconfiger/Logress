@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "graftail: binary not yet installed. Please run 'npm install -g graftail' again or check your installation."
+exit 1

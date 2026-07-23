@@ -1,3 +1,7 @@
 /target
 .env
 /docs/env.md
+npm/bin/graftail-linux-*
+npm/bin/graftail-darwin-*
+npm/bin/graftail-win-*
+dist/
