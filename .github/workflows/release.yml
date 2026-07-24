@@ -8,23 +8,29 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - target: x86_64-unknown-linux-gnu
             os: ubuntu-latest
             name: graftail-linux-x64
+            cross_deps: ""
           - target: aarch64-unknown-linux-gnu
             os: ubuntu-latest
             name: graftail-linux-arm64
+            cross_deps: gcc-aarch64-linux-gnu
           - target: x86_64-apple-darwin
             os: macos-latest
             name: graftail-darwin-x64
+            cross_deps: ""
           - target: aarch64-apple-darwin
             os: macos-latest
             name: graftail-darwin-arm64
+            cross_deps: ""
           - target: x86_64-pc-windows-gnu
             os: ubuntu-latest
             name: graftail-win-x64.exe
+            cross_deps: gcc-mingw-w64-x86-64
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -36,17 +42,26 @@ jobs:
           targets: ${{ matrix.target }}
 
       - name: Install cross-compilation dependencies
-        if: contains(matrix.target, 'windows')
-        run: sudo apt-get install -y mingw-w64
+        if: matrix.cross_deps != ''
+        run: sudo apt-get update -y && sudo apt-get install -y ${{ matrix.cross_deps }}
 
       - name: Build
         run: cargo build --release --target ${{ matrix.target }}
+
+      - name: Rename binary
+        shell: bash
+        run: |
+          SRC="target/${{ matrix.target }}/release/graftail"
+          if [[ "${{ matrix.name }}" == *.exe ]]; then
+            SRC="$SRC.exe"
+          fi
+          mv "$SRC" "${{ matrix.name }}"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.name }}
-          path: target/${{ matrix.target }}/release/${{ startsWith(matrix.name, 'graftail-win') && 'graftail.exe' || 'graftail' }}
+          path: ${{ matrix.name }}
 
   release:
     needs: build
@@ -57,12 +72,13 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: dist
+          merge-multiple: true
 
       - name: List artifacts
-        run: find dist -type f -exec ls -lh {} \;
+        run: ls -lh dist/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/**/*
+          files: dist/graftail-*
           generate_release_notes: true
