@@ -3,7 +3,7 @@ const path = require("path");
 const https = require("https");
 const { execSync } = require("child_process");
 
-const VERSION = require("./package.json").version;
+const VERSION = "0.1.0"; // GitHub Release tag to download from
 const BINARY_NAME = "graftail";
 const BIN_DIR = path.join(__dirname, "bin");
 const BINARY_PATH = path.join(BIN_DIR, process.platform === "win32" ? "graftail.exe" : "graftail");
