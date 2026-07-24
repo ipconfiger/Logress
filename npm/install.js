@@ -57,8 +57,8 @@ function download(url, dest) {
 }
 
 async function main() {
-  // Skip if already installed (e.g. local dev with pre-built binary)
-  if (fs.existsSync(BINARY_PATH)) {
+  // Skip if real binary already installed (> 1MB, not the wrapper)
+  if (fs.existsSync(BINARY_PATH) && fs.statSync(BINARY_PATH).size > 1024 * 1024) {
     console.log("[graftail] Binary already present, skipping download.");
     return;
   }

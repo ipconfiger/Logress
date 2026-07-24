@@ -1,6 +1,6 @@
 {
   "name": "graftail",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Real-time Loki log tailing via Grafana Data Source Proxy",
   "license": "MIT",
   "repository": "github:ipconfiger/Logress",
@@ -14,6 +14,13 @@
     "install.js",
     "bin/graftail"
   ],
-  "os": [ "linux", "darwin", "win32" ],
-  "cpu": [ "x64", "arm64" ]
+  "os": [
+    "linux",
+    "darwin",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ]
 }
